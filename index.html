@@ -65,9 +65,9 @@
         i2.setZoomRange(12, 12);
         i2.setCenterZoom(new mm.Location(38.89217285046211, 282.97229851832213), 12);
 
-        m.addCallback('panned', function (m, c) {            
-            i.panBy(c[0], c[1]);
-            i2.panBy(c[0], c[1]);
+        m.addCallback("drawn", function (m) {	
+            i.setCenter(m.getCenter());
+            i2.setCenter(m.getCenter());
         });
     });
         
@@ -128,12 +128,26 @@
 
     });
     
+    
+    function p50() {
+        m.tileSize = 0;
+    }
+    
     </script>
 </body>
 <style>
 
-.map-tile-loaded.seen {
-    opacity: .5;
+.map-tile-loaded {
+    height: 256px;
+    width: 256px;
+    }
+.map-tile-loaded.p50 {
+    height: 128px;
+    width: 128px;
+    }
+.map-tile-loaded.p25 {
+    height: 64px;
+    width: 64px;
     }
 
 a.wax-fullscreen {
