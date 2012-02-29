@@ -1,6 +1,6 @@
 ## Controls
 
-- `apple` + `-` zoom all the way out to view more tiles
+- `command` + `-` zoom all the way out to view more tiles
 - `arrow keys` pan the map
 - `shift` + `arrow keys` cruise control
 - `esc` or `space` breaks
