@@ -3,7 +3,13 @@
 <head>
 </head>
 <body>
-    <div id="map" style="width: 100%; height: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></map>
+    <div id="map" style="width: 100%; height: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+    
+    <div id="inset" style="width: 400px; height: 400px; position: absolute; bottom: 20px; right: 20px; border: 2px black solid; z-index: 1000;"></div>
+    <div id="inset2" style="width: 400px; height: 400px; position: absolute; bottom: 20px; right: 420px; border: 2px black solid; z-index: 1000;"></div>
+    
+    <div id="marker" style="width: 10px; height: 10px; position: absolute; bottom: 220px; right: 220px; border-radius: 10px;background: red; z-index: 2000;"></div>
+    <div id="marker2" style="width: 10px; height: 10px; position: absolute; bottom: 220px; right: 620px; border-radius: 10px;background: red; z-index: 2000;"></div>
     
     <script src="modestmaps.min.js"></script>
     <script src="wax.mm.min.js"></script>
@@ -16,9 +22,20 @@
         m = new mm.Map('map',new MM.Layer(new wax.mm.connector(tilejson)));
         m.setCenterZoom(new mm.Location(38.89217285046211, 282.97229851832213), 16);
         m.setZoomRange(1, 16);
-        
+                
         wax.mm.hash(m);
-            
+        
+        i = new mm.Map('inset',new MM.Layer(new wax.mm.connector(tilejson)));
+        i.setZoomRange(4, 4);
+        
+        i2 = new mm.Map('inset2',new MM.Layer(new wax.mm.connector(tilejson)));
+        i2.setZoomRange(12, 12);
+
+        m.addCallback("drawn", function (m) {
+            i.setCenter(m.getCenter());
+            i2.setCenter(m.getCenter());
+        });         
+     
     });
     
     
