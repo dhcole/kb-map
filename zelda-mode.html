@@ -13,10 +13,11 @@
     
     <script type="text/javascript">
     var m, mm = com.modestmaps, i = 0;
-    
+
+
     wax.tilejson('http://ec2-184-72-151-34.compute-1.amazonaws.com:8080/v3/yhahn.mapbox-streets-staging.jsonp', function(tilejson) {
         m = new mm.Map('map',new MM.Layer(new wax.mm.connector(tilejson)));
-        m.setCenterZoom(new mm.Location(38.89217285046211, 282.97229851832213), 14);
+        m.setCenterZoom(new mm.Location(38.89217285046211, 282.97229851832213), 16);
         m.setZoomRange(1, 16);
         
         wax.mm.hash(m);
