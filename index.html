@@ -11,7 +11,7 @@
     <div id="marker" style="width: 10px; height: 10px; position: absolute; bottom: 220px; right: 220px; border-radius: 10px;background: red; z-index: 2000;"></div>
     <div id="marker2" style="width: 10px; height: 10px; position: absolute; bottom: 220px; right: 620px; border-radius: 10px;background: red; z-index: 2000;"></div>
     
-    <div id="boxselector-text" style="position: absolute; bottom: 20px; left: 20px; font-size: 90px;"></div>
+    <div id="pointselector-text" style="position: absolute; bottom: 20px; left: 20px; font-size: 90px;"></div>
     
     <div id="help-button"></div>
     <div id="help">
@@ -28,7 +28,8 @@
             tilejson: '1.0.0',
             scheme: 'xyz',
             tiles: ['https://dnv9my2eseobd.cloudfront.net/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png']
-        };
+        },
+        pointselector;
     
     
     
@@ -37,19 +38,9 @@
         m.setCenterZoom(new mm.Location(38.89217285046211, 282.97229851832213), 16);
         m.setZoomRange(1, 16);
 
-        wax.mm.boxselector(m, tilejson, {
+        pointselector = wax.mm.pointselector(m, tilejson, {
           callback: function(coords) {
-            var bbox = {
-                west: coords[0].lon,
-                south: coords[0].lat,
-                east: coords[1].lon,
-                north: coords[1].lat                
-            };
-            console.log(coords);
-            $('#boxselector-text').text(
-              coords.map(function(c) {
-                return c.lon + ', ' + c.lat;
-              }).join(', '));
+            $('#pointselector-text').text(coords.join(' - '));
           }
         });
 
@@ -72,7 +63,6 @@
     });
         
     $(document).keydown(function(e){
-        console.log(e);
         // cruise control
         if (e.shiftKey) {
             if (e.keyCode === 37) { 
@@ -113,43 +103,24 @@
                 m.panDown();
                 return false;
             }
-            if (e.keyCode == 32) { 
+            if (e.keyCode == 32 || e.keyCode == 27) { 
                 window.clearInterval(intervalID);
-                return false;
-            }
+                pointselector.remove(m);
+                pointselector = wax.mm.pointselector(m, tilejson, {
+                  callback: function(coords) {
+                    $('#pointselector-text').text(coords.join(' - '));
+                  }
+                });
 
-            if (e.keyCode == 27) { 
-                window.clearInterval(intervalID);
                 return false;
             }
         }
-        
-        
-
     });
     
-    
-    function p50() {
-        m.tileSize = 0;
-    }
-    
+        
     </script>
 </body>
 <style>
-
-.map-tile-loaded {
-    height: 256px;
-    width: 256px;
-    }
-.map-tile-loaded.p50 {
-    height: 128px;
-    width: 128px;
-    }
-.map-tile-loaded.p25 {
-    height: 64px;
-    width: 64px;
-    }
-
 a.wax-fullscreen {
   /* TODO: sprite-based fullscreen button */
   position: absolute;
